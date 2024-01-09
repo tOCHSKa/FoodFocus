@@ -6,6 +6,65 @@
     text-decoration: none;
 }
 
+/* Loading Page */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-1);    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader img {
+    height: 50px;
+    margin-bottom: 13px;
+}
+
+.spinner {
+    border: 7px solid var(--primary-color);
+    border-top: 7px solid var(--primary-color-hover);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader p {
+    margin-top: 10px;
+    font-size: 40px;
+    letter-spacing: 0.35em;
+    line-height: 0.9;
+    font-weight: var(--bold_900);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0px;
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.65);
+    font-family: 'Unbounded', sans-serif;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.loader img,
+.loader p {
+    animation: blink 900ms infinite;
+}
+
+
+
 html {
     scroll-behavior: smooth;
 }
@@ -52,10 +111,10 @@ body::-webkit-scrollbar {
     --primary-color: #314feb;
     --primary-color-hover: #1632bd;
     --secondary-color: #fff;
-    --bg-1: linear-gradient(56deg, #c3f2ea 0%, #FDE3FF 50%, #64e8ff 100%);
+    --bg-1: linear-gradient(302deg, #c3f2ea 0%, #FDE3FF 50%, #64e8ff 100%);
     --bg-2: linear-gradient(135deg, #c3f2ea 0%, #FDE3FF 50%, #87eeff 100%);
     --bg-3: linear-gradient(225deg, #c3f2ea 0%, #FDE3FF 50%, #87eeff 100%);
-    --bg-4: linear-gradient(302deg, #c3f2ea 0%, #FDE3FF 50%, #87eeff 100%);
+    --bg-4: linear-gradient(56deg, #c3f2ea 0%, #FDE3FF 50%, #87eeff 100%);
     --bg-blur: blur(00px);
 }
 
@@ -142,7 +201,7 @@ input::placeholder {
     opacity: 0.7;
 }
 
-.bg {
+body .bg {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -159,18 +218,18 @@ input::placeholder {
     100% { opacity: 0; }
 }
 
-.bg1 {
+body .bg1 {
     background-image: var(--bg-1);
 }
-.bg2 {
+body .bg2 {
     background-image: var(--bg-2);
     animation-delay: 5s;
 }
-.bg3 {
+body .bg3 {
     background-image: var(--bg-3);
     animation-delay: 10s;
 }
-.bg4 {
+body .bg4 {
     background-image: var(--bg-4);
     animation-delay: 15s;
 }
@@ -269,6 +328,11 @@ footer .copyright {
 
 /* DESKTOP */
 @media (min-width: 768px) {
+    /* LOADING */
+    .loader p {
+        width: 300px;
+    }
+
     :root {
         --font-size-title: 50px;
         --font-size-subtitle: 20px;
