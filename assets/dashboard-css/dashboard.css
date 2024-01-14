@@ -372,7 +372,8 @@ main.search-config {
     top: 50px;
     left: 0;
     padding: 0 15px;
-    background: var(--blur-color);
+    background-color: #00dade00;
+    background-image: linear-gradient(180deg, #00dade00 0%, #00dade5d 20%, #1e00ff52 100%);
     border-radius: 0 0 20px 20px;
     border: 0.5px solid #ffffff4a;
     backdrop-filter: var(--blur);
