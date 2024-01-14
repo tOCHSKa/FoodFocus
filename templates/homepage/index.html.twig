@@ -1,23 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-        {{ parent() }}
-        <link rel="stylesheet" href="{{ asset('homepage-css/homepage.css') }}">
-		<link rel="stylesheet" href="{{ asset('homepage-css/sign-up.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('homepage-css/homepage.css') }}">
+	<link rel="stylesheet" href="{{ asset('homepage-css/sign-up.css') }}">
 {% endblock %}
 
 {% block javascripts %}
-        {{ parent() }}
-		<script src="{{ asset('homepage-js/homepage.js') }}" defer></script>
-        <script src="{{ asset('homepage-js/homepage-carousel.js') }}" defer></script>
-		<script src="{{ asset('homepage-js/homepage-loading-page.js') }}" defer></script>
-		<script src="{{ asset('homepage-js/homepage-q-a.js') }}" defer></script>
-		<script src="{{ asset('homepage-js/homepage-typing-animation.js') }}" defer></script>
-		<script src="{{ asset('homepage-js/homepage-sign-up.js') }}" defer></script>
+    {{ parent() }}
+	<script src="{{ asset('homepage-js/homepage.js') }}" defer></script>
+    <script src="{{ asset('homepage-js/homepage-carousel.js') }}" defer></script>
+	<script src="{{ asset('homepage-js/homepage-q-a.js') }}" defer></script>
+	<script src="{{ asset('homepage-js/homepage-typing-animation.js') }}" defer></script>
+	<script src="{{ asset('homepage-js/homepage-sign-up.js') }}" defer></script>
 {% endblock %}
 
 
 {% block body %}
+<!-- HOMEPAGE -->
+
 	<img class="homme" src="{{ asset('img/homme.png') }}" alt="">
 
 	<header>
