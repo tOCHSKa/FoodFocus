@@ -26,8 +26,8 @@ class Personne
     #[ORM\Column(length: 50)]
     private ?string $email = null;
 
-    // #[ORM\Column(length: 50)]
-    // private ?string $sexe = null;
+    #[ORM\Column(length: 50)]
+    private ?string $sexe = null;
 
     public function getId(): ?int
     {
@@ -82,15 +82,15 @@ class Personne
         return $this;
     }
 
-    // public function getSexe(): ?string
-    // {
-    //     return $this->email;
-    // }
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
 
-    // public function setSexe(string $sexe): static
-    // {
-    //     $this->sexe = $sexe;
+    public function setSexe(string $sexe): static
+    {
+        $this->sexe = $sexe;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 }

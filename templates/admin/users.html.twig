@@ -22,7 +22,7 @@
                     <td>{{ personne.name }}</td>
                     <td>{{ personne.email }}</td>
                     <td>{{ personne.id }}</td>
-                    <td><a class="btn btn-primary" href="{{ path('dashboard.detail', {'id': personne.id}) }}" role="button">Afficher</a></td>
+                    <td><a class="btn btn-primary" href="{{ path('admin.detail', {'id': personne.id}) }}" role="button">Afficher</a></td>
                 </tr>
             {% endfor %}
         </tbody>

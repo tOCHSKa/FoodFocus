@@ -12,23 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PersonneController extends AbstractController
 {
-    #[Route('/', name: 'dashboard.list')]
+    #[Route('/', name: 'admin.list')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
         $personnes = $repository->findAll();
-        return $this->render('dashboard/users.html.twig',  ['personnes' => $personnes]);
+        return $this->render('admin/users.html.twig',  ['personnes' => $personnes]);
     }
 
-    #[Route('/{id<\d+>}', name: 'dashboard.detail')]
+    #[Route('/{id<\d+>}', name: 'admin.detail')]
     public function detail(ManagerRegistry $doctrine, $id): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
         if (!$personne) {
             $this->addFlash(type: 'error', message: "La personne d'id $id n'existe pas");
-            return $this->redirectToRoute(route: 'dashboard.list');
+            return $this->redirectToRoute(route: 'admin.list');
         }
-        return $this->render('dashboard/detail.html.twig',  ['personne' => $personne]);
+        return $this->render('admin/detail.html.twig',  ['personne' => $personne]);
     }
 }
