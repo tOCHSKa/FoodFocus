@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\PersonneRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
+#[UniqueEntity('Name')]
+#[UniqueEntity('email')]
 class Personne
 {
     #[ORM\Id]
@@ -15,19 +20,28 @@ class Personne
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
     private ?int $age = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Email(
+        message: 'L\'adresse email "{{ value }}" n\'est pas valide.',
+        mode: 'strict' // 'html5' ou 'strict' selon le niveau de validation souhaité
+    )]
     private ?string $email = null;
 
-    // #[ORM\Column(length: 50)]
-    // private ?string $sexe = null;
+    #[ORM\Column(length: 1)]
+    #[Assert\NotBlank()]
+    private ?string $sexe = null;
 
     public function getId(): ?int
     {
@@ -82,15 +96,15 @@ class Personne
         return $this;
     }
 
-    // public function getSexe(): ?string
-    // {
-    //     return $this->email;
-    // }
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
 
-    // public function setSexe(string $sexe): static
-    // {
-    //     $this->sexe = $sexe;
+    public function setSexe(string $sexe): static
+    {
+        $this->sexe = $sexe;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 }
