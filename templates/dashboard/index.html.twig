@@ -1,373 +1,581 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('dashboard-css/dashboard.css') }}" rel="stylesheet" type="text/css">
+	{{ parent() }}
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="{{ asset('dashboard-css/dashboard.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('dashboard-css/profile_pop_up.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!--CDN Chart.js-->
-    <script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script> <!-- CDN Gauge.js -->
-    <script src="https://kit.fontawesome.com/6441db969a.js" crossorigin="anonymous"></script> <!-- CDN Font Awesome -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script> <!-- CDN Drag & Drop -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- CDN Chart.js -->
-    <script src="{{ asset('dashboard-js/dashboard.js') }}" defer></script>
-    <script src="{{ asset('dashboard-js/dashboard-kcal-chart.js') }}" defer></script>
-    <script src="{{ asset('dashboard-js/dashboard-suivi-graph.js') }}" defer></script>
-    <script src="{{ asset('dashboard-js/dashboard-drag-drop.js') }}" defer></script>
-    <script src="{{ asset('dashboard-js/dashboard-typing-animation.js') }}" defer></script>
-    <script src="{{ asset('dashboard-js/dashboard-search.js') }}" defer></script>
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!--CDN Chart.js-->
+	<script src="https://cdn.jsdelivr.net/npm/gaugeJS/dist/gauge.min.js"></script>
+	<!-- CDN Gauge.js -->
+	<script src="https://kit.fontawesome.com/6441db969a.js" crossorigin="anonymous"></script>
+	<!-- CDN Font Awesome -->
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+	<!-- CDN Drag & Drop -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!-- CDN Chart.js -->
+	<script src="{{ asset('dashboard-js/dashboard.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/dashboard-kcal-chart.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/dashboard-suivi-graph.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/dashboard-drag-drop.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/dashboard-typing-animation.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/dashboard-search.js') }}" defer></script>
+	<script src="{{ asset('dashboard-js/profile_pop_up.js') }}" defer></script>
 {% endblock %}
 
 
 {% block body %}
-<!-- DASHBOARD -->
-    <header>
-        <div class="logo-container">
-            <img class="logo" src="{{ asset('img/logo.png')}}" alt="logo">
-            <h1 class="brand-name">Food focus</h1>
-        </div>
+	<!-- DASHBOARD -->
+	<header>
+		<div class="logo-container">
+			<img class="logo" src="{{ asset('img/logo.png')}}" alt="logo">
+			<h1 class="brand-name">Food focus</h1>
+		</div>
 
-        <div class="log-out-container" id="log-out-container">
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </div>
-    </header>
+		<div class="log-out-container" id="log-out-container">
+			<i class="fa-solid fa-right-from-bracket"></i>
+		</div>
+	</header>
 
-    <main>
-        <div class="left-section">
-            <div class="header-block">
-                <div class="profile-container">
-                    <div class="profile-avatar-container">
-                        <img class="profile-avatar" id="profile-avatar" src="{{ asset('img/avatar.png')}}" alt="">
-                    </div>
-                    <div class="profile-text-container">
-                        <h3 class="profile-name-container">Hey <span class="profile-name"
-                                id="profile-name">Adenan</span></h3>
-                        <p class="edit-profile-text">Consulter mon profil<i class="fa-solid fa-eye look-profile"
-                                id="look-profile"></i></p>
-                    </div>
-                </div>
+	<main>
+		<div class="left-section">
+			<div class="header-block">
+				<div class="profile-container">
+					<div class="profile-avatar-container">
+						<img class="profile-avatar" id="profile-avatar" src="{{ asset('img/avatar.png')}}" alt="">
+					</div>
+					<div class="profile-text-container">
+						<h3 class="profile-name-container">Hey
+							<span class="profile-name" id="profile-name">Adenan</span>
+						</h3>
+						<p class="edit-profile-text">Consulter mon profil<i class="fa-solid fa-eye look-profile" id="look-profile"></i>
+						</p>
+					</div>
+				</div>
 
-                <div class="search-date-container">
-                    <div class="search-bar">
-                        <input type="text" class="auto-type" id="search" placeholder="">
-                        <div class="search-bar-icons">
-                            <i class="fa-solid fa-search search-icon"></i>
-                            <div class="history-container" title="active le mode histotyque afin de chercher dans la liste">
-                                <i class="fa-solid fa-clock-rotate-left history-icon" id="history-icon"></i><p class="history-active">ON</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="search-result-container">
-                        <div class="search-result-card">
-                            <div class="search-aliment-icon-container">
-                                <i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
-                            </div>
-                            <div class="search-aliment-info-container">
-                                <div class="search-aliment-text-container">
-                                    <h3 class="search-aliment-name">Pain de mie</h3>
-                                </div>
-                                <p class="search-aliment-calories-container"><span class="search-aliment-calories">400</span> Kcal</p>
-                            </div>
-                            <div class="search-aliment-quantity-container">
-                                <p>saisir qté / gr</p>
-                                <input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
-                            </div>
-                            <button id="plus-aliment-button" disabled><i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i></button>
-                        </div>
-                        <div class="search-result-card">
-                            <div class="search-aliment-icon-container">
-                                <i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
-                            </div>
-                            <div class="search-aliment-info-container">
-                                <div class="search-aliment-text-container">
-                                    <h3 class="search-aliment-name">Pain de mie</h3>
-                                </div>
-                                <p class="search-aliment-calories-container"><span class="search-aliment-calories">400</span> Kcal</p>
-                            </div>
-                            <div class="search-aliment-quantity-container">
-                                <p>saisir qté / gr</p>
-                                <input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
-                            </div>
-                            <button id="plus-aliment-button" disabled><i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i></button>
-                        </div>
-                        <div class="search-result-card">
-                            <div class="search-aliment-icon-container">
-                                <i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
-                            </div>
-                            <div class="search-aliment-info-container">
-                                <div class="search-aliment-text-container">
-                                    <h3 class="search-aliment-name">Pain de mie</h3>
-                                </div>
-                                <p class="search-aliment-calories-container"><span class="search-aliment-calories">400</span> Kcal</p>
-                            </div>
-                            <div class="search-aliment-quantity-container">
-                                <p>saisir qté / gr</p>
-                                <input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
-                            </div>
-                            <button id="plus-aliment-button" disabled><i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i></button>
-                        </div>
-                        <div class="search-result-card">
-                            <div class="search-aliment-icon-container">
-                                <i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
-                            </div>
-                            <div class="search-aliment-info-container">
-                                <div class="search-aliment-text-container">
-                                    <h3 class="search-aliment-name">Pain de mie</h3>
-                                </div>
-                                <p class="search-aliment-calories-container"><span class="search-aliment-calories">400</span> Kcal</p>
-                            </div>
-                            <div class="search-aliment-quantity-container">
-                                <p>saisir qté / gr</p>
-                                <input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
-                            </div>
-                            <button id="plus-aliment-button" disabled><i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i></button>
-                        </div>
-                        <div class="search-result-card">
-                            <div class="search-aliment-icon-container">
-                                <i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
-                            </div>
-                            <div class="search-aliment-info-container">
-                                <div class="search-aliment-text-container">
-                                    <h3 class="search-aliment-name">Pain de mie</h3>
-                                </div>
-                                <p class="search-aliment-calories-container"><span class="search-aliment-calories">400</span> Kcal</p>
-                            </div>
-                            <div class="search-aliment-quantity-container">
-                                <p>saisir qté / gr</p>
-                                <input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
-                            </div>
-                            <button id="plus-aliment-button" disabled><i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i></button>
-                        </div>
-                    </div>
-                    <div class="date-container">
-                        <i class="fa-solid fa-calendar date-icon"></i>
-                        <p class="date">11/01/2024</p>
-                        <i class="fa-solid fa-clock hour-icon"></i>
-                        <p class="hour">10:32</p>
-                    </div>
-                </div>
-            </div>
+				<div class="search-date-container">
+					<div class="search-bar">
+						<input type="text" class="auto-type" id="search" placeholder="">
+						<div class="search-bar-icons">
+							<i class="fa-solid fa-search search-icon"></i>
+							<div class="history-container" title="active le mode histotyque afin de chercher dans la liste">
+								<i class="fa-solid fa-clock-rotate-left history-icon" id="history-icon"></i>
+								<p class="history-active">ON</p>
+							</div>
+						</div>
+					</div>
+					<div class="search-result-container">
+						<div class="search-result-card">
+							<div class="search-aliment-icon-container">
+								<i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
+							</div>
+							<div class="search-aliment-info-container">
+								<div class="search-aliment-text-container">
+									<h3 class="search-aliment-name">Pain de mie</h3>
+								</div>
+								<p class="search-aliment-calories-container">
+									<span class="search-aliment-calories">400</span>
+									Kcal</p>
+							</div>
+							<div class="search-aliment-quantity-container">
+								<p>saisir qté / gr</p>
+								<input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
+							</div>
+							<button id="plus-aliment-button" disabled>
+								<i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i>
+							</button>
+						</div>
+						<div class="search-result-card">
+							<div class="search-aliment-icon-container">
+								<i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
+							</div>
+							<div class="search-aliment-info-container">
+								<div class="search-aliment-text-container">
+									<h3 class="search-aliment-name">Pain de mie</h3>
+								</div>
+								<p class="search-aliment-calories-container">
+									<span class="search-aliment-calories">400</span>
+									Kcal</p>
+							</div>
+							<div class="search-aliment-quantity-container">
+								<p>saisir qté / gr</p>
+								<input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
+							</div>
+							<button id="plus-aliment-button" disabled>
+								<i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i>
+							</button>
+						</div>
+						<div class="search-result-card">
+							<div class="search-aliment-icon-container">
+								<i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
+							</div>
+							<div class="search-aliment-info-container">
+								<div class="search-aliment-text-container">
+									<h3 class="search-aliment-name">Pain de mie</h3>
+								</div>
+								<p class="search-aliment-calories-container">
+									<span class="search-aliment-calories">400</span>
+									Kcal</p>
+							</div>
+							<div class="search-aliment-quantity-container">
+								<p>saisir qté / gr</p>
+								<input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
+							</div>
+							<button id="plus-aliment-button" disabled>
+								<i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i>
+							</button>
+						</div>
+						<div class="search-result-card">
+							<div class="search-aliment-icon-container">
+								<i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
+							</div>
+							<div class="search-aliment-info-container">
+								<div class="search-aliment-text-container">
+									<h3 class="search-aliment-name">Pain de mie</h3>
+								</div>
+								<p class="search-aliment-calories-container">
+									<span class="search-aliment-calories">400</span>
+									Kcal</p>
+							</div>
+							<div class="search-aliment-quantity-container">
+								<p>saisir qté / gr</p>
+								<input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
+							</div>
+							<button id="plus-aliment-button" disabled>
+								<i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i>
+							</button>
+						</div>
+						<div class="search-result-card">
+							<div class="search-aliment-icon-container">
+								<i class="fa-solid fa-bread-slice" id="search-aliment-type-icon"></i>
+							</div>
+							<div class="search-aliment-info-container">
+								<div class="search-aliment-text-container">
+									<h3 class="search-aliment-name">Pain de mie</h3>
+								</div>
+								<p class="search-aliment-calories-container">
+									<span class="search-aliment-calories">400</span>
+									Kcal</p>
+							</div>
+							<div class="search-aliment-quantity-container">
+								<p>saisir qté / gr</p>
+								<input class="search-aliment-quantity" id="search-aliment-quantity" type="number" min="1" step="1" placeholder="ICI">
+							</div>
+							<button id="plus-aliment-button" disabled>
+								<i class="fa-solid fa-circle-plus" id="plus-aliment-icon"></i>
+							</button>
+						</div>
+					</div>
+					<div class="date-container">
+						<i class="fa-solid fa-calendar date-icon"></i>
+						<p class="date">11/01/2024</p>
+						<i class="fa-solid fa-clock hour-icon"></i>
+						<p class="hour">10:32</p>
+					</div>
+				</div>
+			</div>
 
-            <div class="gauge-container">
-                <div class="gauge-graphic-container">
-                    <canvas id="calorieGauge"></canvas>
-                    <div class="calories-calc-info">
-                        <p class="calories-calc-description">Le but est de</p>
-                        <p class="calories-calc-container"><span class="calories-calc">2301</span> Kcal</p>
-                    </div>
-                    <div class="comparaison">
-                        <div class="calories-consomme-container">
-                            <p class="calories-consomme-prefix"><span class="calories-consomme">301</span> Kcal</p>
-                            <p><i class="fa-solid fa-bolt"></i>CONSOMMÉ</p>
-                        </div>
-                        <div class="calories-restantes-container">
-                            <p class="calories-restantes-prefix"><span class="calories-restantes">2000</span> Kcal</p>
-                            <p><i class="fa-solid fa-hourglass-half"></i>RESTANTES</p>
-                        </div>
-                    </div>
-                </div>
+			<div class="gauge-container">
+				<div class="gauge-graphic-container">
+					<canvas id="calorieGauge"></canvas>
+					<div class="calories-calc-info">
+						<p class="calories-calc-description">Le but est de</p>
+						<p class="calories-calc-container">
+							<span class="calories-calc">2301</span>
+							Kcal</p>
+					</div>
+					<div class="comparaison">
+						<div class="calories-consomme-container">
+							<p class="calories-consomme-prefix">
+								<span class="calories-consomme">301</span>
+								Kcal</p>
+							<p>
+								<i class="fa-solid fa-bolt"></i>CONSOMMÉ</p>
+						</div>
+						<div class="calories-restantes-container">
+							<p class="calories-restantes-prefix">
+								<span class="calories-restantes">2000</span>
+								Kcal</p>
+							<p>
+								<i class="fa-solid fa-hourglass-half"></i>RESTANTES</p>
+						</div>
+					</div>
+				</div>
 
-                <div class="macros-personal-infos-container">
-                    <div class="macro-container">
-                        <p class="macro-title">Mes Macros</p>
-                        <div class="macro-infos-container">
-                            <div class="labels-container">
-                                <div class="glucides-container m-c">
-                                    <div class="glucides-icon-container m-i-c">
-                                        <i class="fa-solid fa-fire-flame-curved glucides-icon m-i"></i>
-                                    </div>
-                                    <p class="glucides m-l">Glucides</p>
-                                </div>
-                                <div class="proteines-container m-c">
-                                    <div class="proteines-icon-container m-i-c">
-                                        <i class="fa-solid fa-dna proteines-icon m-i"></i>
-                                    </div>
-                                    <p class="proteines m-l">Proteines</p>
-                                </div>
-                                <div class="lipides-container m-c">
-                                    <div class="lipides-icon-container m-i-c">
-                                        <i class="fa-solid fa-heart-pulse lipides-icon m-i"></i>
-                                    </div>
-                                    <p class="lipides m-l">Lipides</p>
-                                </div>
-                            </div>
-                            <div class="valeurs-container">
-                                <p class="valeur-glucides-container"><span class="valeur-glucides">400</span> gr</p>
-                                <p class="valeur-proteines-container"><span class="valeur-proteines">100</span> gr</p>
-                                <p class="valeur-lipides-container"><span class="valeur-lipides">40</span> gr</p>
-                            </div>
-                        </div>
-                    </div>
+				<div class="macros-personal-infos-container">
+					<div class="macro-container">
+						<p class="macro-title">Mes Macros</p>
+						<div class="macro-infos-container">
+							<div class="labels-container">
+								<div class="glucides-container m-c">
+									<div class="glucides-icon-container m-i-c">
+										<i class="fa-solid fa-fire-flame-curved glucides-icon m-i"></i>
+									</div>
+									<p class="glucides m-l">Glucides</p>
+								</div>
+								<div class="proteines-container m-c">
+									<div class="proteines-icon-container m-i-c">
+										<i class="fa-solid fa-dna proteines-icon m-i"></i>
+									</div>
+									<p class="proteines m-l">Proteines</p>
+								</div>
+								<div class="lipides-container m-c">
+									<div class="lipides-icon-container m-i-c">
+										<i class="fa-solid fa-heart-pulse lipides-icon m-i"></i>
+									</div>
+									<p class="lipides m-l">Lipides</p>
+								</div>
+							</div>
+							<div class="valeurs-container">
+								<p class="valeur-glucides-container">
+									<span class="valeur-glucides">400</span>
+									gr</p>
+								<p class="valeur-proteines-container">
+									<span class="valeur-proteines">100</span>
+									gr</p>
+								<p class="valeur-lipides-container">
+									<span class="valeur-lipides">40</span>
+									gr</p>
+							</div>
+						</div>
+					</div>
 
-                    <div class="personal-infos">
-                        <div class="poids-container">
-                            <i class="fa-solid fa-weight-scale balance-icon info-icon" id="balance"></i>
-                            <p class="poids-info-container"><i class="fa-solid fa-pen-to-square edit-icon" id="edit-icon-poids"></i><span class="poids">82</span> Kg</p>
-                        </div>
-                        <div class="activite-container">
-                            <i class="fa-solid fa-person-running activite-icon info-icon" id="activite-icon"></i>
-                            <div><i class="fa-solid fa-pen-to-square edit-icon" id="edit-icon-activité"></i><p class="activité">Trés active</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+					<div class="personal-infos">
+						<div class="poids-container">
+							<i class="fa-solid fa-weight-scale balance-icon info-icon" id="balance"></i>
+							<p class="poids-info-container">
+								<i class="fa-solid fa-pen-to-square edit-icon" id="edit-icon-poids"></i>
+								<span class="poids">82</span>
+								Kg</p>
+						</div>
+						<div class="activite-container">
+							<i class="fa-solid fa-person-running activite-icon info-icon" id="activite-icon"></i>
+							<div>
+								<i class="fa-solid fa-pen-to-square edit-icon" id="edit-icon-activité"></i>
+								<p class="activité">Trés active</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="suivi-container">
-                <div>
-                    <button id="week-btn">Semaine</button>
-                    <button id="month-btn">Mois</button>
-                    <button id="year-btn">Année</button>
-                </div>
+			<div class="suivi-container">
+				<div>
+					<button id="week-btn">Semaine</button>
+					<button id="month-btn">Mois</button>
+					<button id="year-btn">Année</button>
+				</div>
 
-                <div class="graph-container">
-                    <canvas class="my-chart" id="myChart"></canvas>
+				<div class="graph-container">
+					<canvas class="my-chart" id="myChart"></canvas>
 
-                    <div class="macro-container-labels">
-                        <button class="macro-btn" id="calories-btn">Calories</button>
-                        <button class="macro-btn" id="proteins-btn">Protéines</button>
-                        <button class="macro-btn" id="carbs-btn">Glucides</button>
-                        <button class="macro-btn" id="fats-btn">Lipides</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="right-section">
-            <div class="aliment-list-container">
-                <div class="aliment-card-collection">
-                    <div class="aliment-card" data-id="uniqueId1">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-apple-whole" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name" id="aliment-name">Pomme</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity" id="aliment-quantity">100</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories" id="aliment-calories">300</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId2">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-bread-slice" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Pain</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">230</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">1400</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId3">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-bowl-food" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Riz basmati au curry</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">1230</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">1400</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId4">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-drumstick-bite" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Poulet</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">230</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">1400</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId5">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-carrot" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Salade</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">100</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">900</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId6">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-glass-water" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Jus de fruit</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">100</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">900</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId7">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-cookie-bite" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Cookies</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">50</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">400</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-
-                    <div class="aliment-card" data-id="uniqueId8">
-                        <div class="aliment-icon-container">
-                            <i class="fa-solid fa-pizza-slice" id="aliment-type-icon"></i>
-                        </div>
-                        <div class="aliment-info-container">
-                            <div class="aliment-text-container">
-                                <h3 class="aliment-name">Chips</h3>
-                                <p class="aliment-quantity-container"><span class="aliment-quantity">120</span> gr</p>
-                            </div>
-                            <p class="aliment-calories-container"><span class="aliment-calories">500</span> Kcal</p>
-                        </div>
-                        <i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<div class="macro-container-labels">
+						<button class="macro-btn" id="calories-btn">Calories</button>
+						<button class="macro-btn" id="proteins-btn">Protéines</button>
+						<button class="macro-btn" id="carbs-btn">Glucides</button>
+						<button class="macro-btn" id="fats-btn">Lipides</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
+		<div class="right-section">
+			<div class="aliment-list-container">
+				<div class="aliment-card-collection">
+					<div class="aliment-card" data-id="uniqueId1">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-apple-whole" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name" id="aliment-name">Pomme</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity" id="aliment-quantity">100</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories" id="aliment-calories">300</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
 
-        <div class="menu-bar">
-            <div class="menu-bar-container">
-                <div class="menu-bar-icon-container" id="home">
-                    <i class="fa-solid fa-home" id="home-icon"></i>
-                </div>
-                <div class="menu-bar-icon-container plus-container" id="ajout">
-                    <i class="fa-solid fa-plus ajout-icon"></i>
-                </div>
-                <div class="menu-bar-icon-container" id="suivi">
-                    <i class="fa-solid fa-chart-simple suivi-icon"></i>
-                </div>
-            </div>
-        </div>
-    </main>
+					<div class="aliment-card" data-id="uniqueId2">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-bread-slice" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Pain</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">230</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">1400</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId3">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-bowl-food" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Riz basmati au curry</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">1230</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">1400</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId4">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-drumstick-bite" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Poulet</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">230</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">1400</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId5">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-carrot" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Salade</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">100</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">900</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId6">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-glass-water" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Jus de fruit</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">100</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">900</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId7">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-cookie-bite" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Cookies</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">50</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">400</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+
+					<div class="aliment-card" data-id="uniqueId8">
+						<div class="aliment-icon-container">
+							<i class="fa-solid fa-pizza-slice" id="aliment-type-icon"></i>
+						</div>
+						<div class="aliment-info-container">
+							<div class="aliment-text-container">
+								<h3 class="aliment-name">Chips</h3>
+								<p class="aliment-quantity-container">
+									<span class="aliment-quantity">120</span>
+									gr</p>
+							</div>
+							<p class="aliment-calories-container">
+								<span class="aliment-calories">500</span>
+								Kcal</p>
+						</div>
+						<i class="fa-solid fa-trash-can" id="delete-aliment-icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="menu-bar">
+			<div class="menu-bar-container">
+				<div class="menu-bar-icon-container" id="home">
+					<i class="fa-solid fa-home" id="home-icon"></i>
+				</div>
+				<div class="menu-bar-icon-container plus-container" id="ajout">
+					<i class="fa-solid fa-plus ajout-icon"></i>
+				</div>
+				<div class="menu-bar-icon-container" id="suivi">
+					<i class="fa-solid fa-chart-simple suivi-icon"></i>
+				</div>
+			</div>
+		</div>
+
+
+		{# profile pop up #}
+
+		<div class="page-content">
+			<div class="row">
+				<div class="col-xl-6 col-md-12">
+					<div class="card user-card-full">
+						<div class="row m-l-0 m-r-0">
+							<div class="col-sm-4 bg-c-lite-green user-profile">
+								<div class="edit-layer">
+									<i class="fa-regular fa-floppy-disk edit-img"></i>
+									<i class="fa-solid fa-pen-to-square edit-img"></i>
+									<div id="app-cover">
+
+										<div class="toggle-button-cover">
+											<div class="button-cover">
+												<div class="button r" id="button-1">
+													<input id="checkbox" type="checkbox" class="checkbox"/>
+													<div class="knobs"></div>
+													<div class="layer"></div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="card-block text-center text-white">
+									<div class="m-b-25">
+										<div class="male">
+											<img class="mySlidesMale" src="{{ asset('img/man-1.png') }}">
+											<img class="mySlidesMale" src="{{ asset('img/man-2.png') }}">
+											<img class="mySlidesMale" src="{{ asset('img/man-3.png') }}">
+											<img class="mySlidesMale" src="{{ asset('img/man-4.png') }}">
+											<img class="mySlidesMale" src="{{ asset('img/man-5.png') }}">
+											<img class="mySlidesMale" src=".{{ asset('img/man-6.png') }}">
+											<img class="mySlidesMale" src="{{ asset('img/man-7.png') }}">
+										</div>
+										<div class="female">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-1.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-2.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-3.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-4.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-5.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-6.png') }}">
+											<img class="mySlidesFemale" src="{{ asset('img/woman-7.png') }}">
+										</div>
+										<div class="btn-container">
+											<button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+											<button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-8">
+								<div class="card-block">
+									<div class="info-bar">
+										<div class="quit">
+											<i class="fa-regular fa-x leave"></i>
+										</div>
+									</div>
+									<h6 class="m-b-20 p-b-5 b-b-default f-w-600">Informations de compte</h6>
+									<div class="row">
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Email</p>
+											<input type="email" disabled class="text-muted w-80" placeholder="exemple@exemple.com" id="inputEmail">
+											<i class="edit-icon fa-solid fa-pen" data-field="Email" id="editEmail" onclick="editField(this)"></i>
+											<i class="fa-solid fa-check d-none check" data-field="Email" id="checkEmail" onclick="validateEmail(this)"></i>
+											<i class="fa-solid fa-xmark d-none leave" data-field="Email" id="xmarkEmail" onclick="cancelEdit(this)"></i>
+										</div>
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Mot De Passe</p>
+											<input type="password" disabled class="text-muted w-80" placeholder="************" id="inputMotDePasse">
+											<i class="edit-icon fa-solid fa-pen" data-field="MotDePasse" id="editMotDePasse" onclick="editField(this)"></i>
+											<i class="fa-solid fa-check d-none check" id="checkMotDePasse"></i>
+											<i class="fa-solid fa-xmark d-none leave" data-field="MotDePasse" id="xmarkMotDePasse" onclick="cancelEdit(this)"></i>
+										</div>
+										<h6 class="m-b-20 p-b-5 b-b-default f-w-600">Informations personnelles
+										</h6>
+										<div class="row">
+											<div class="col-sm-6">
+												<p class="m-b-10 f-w-600">Nom</p>
+												<input type="text" disabled class="text-muted w-80" placeholder="Jean" id="inputNom">
+												<i class="edit-icon fa-solid fa-pen" data-field="Nom" id="editNom" onclick="editField(this)"></i>
+												<i class="fa-solid fa-check d-none check" id="checkNom"></i>
+												<i class="fa-solid fa-xmark d-none leave" data-field="Nom" id="xmarkNom" onclick="cancelEdit(this)"></i>
+											</div>
+											<div class="col-sm-6">
+												<p class="m-b-10 f-w-600">Prénom</p>
+												<input type="text" disabled class="text-muted w-80" placeholder="Scott" id="inputPrenom">
+												<i class="edit-icon fa-solid fa-pen" data-field="Prenom" id="editPrenom" onclick="editField(this)"></i>
+												<i class="fa-solid fa-check d-none check" id="checkPrenom"></i>
+												<i class="fa-solid fa-xmark d-none leave" data-field="Prenom" id="xmarkPrenom" onclick="cancelEdit(this)"></i>
+											</div>
+											<div class="col-sm-6">
+												<p class="m-b-10 f-w-600">Date de naissance</p>
+												<input type="text" disabled class="text-muted w-80" placeholder="JJ/MM/AAAA" id="inputDatenaissance">
+												<i class="edit-icon fa-solid fa-pen" data-field="Datenaissance" id="editDatenaissance" onclick="editField(this)"></i>
+												<i class="fa-solid fa-check d-none check" id="checkDatenaissance"></i>
+												<i class="fa-solid fa-xmark d-none leave" data-field="Datenaissance" id="xmarkDatenaissance" onclick="cancelEdit(this)"></i>
+											</div>
+											<div class="col-sm-6">
+												<p class="m-b-10 f-w-600">Taille (cm)</p>
+												<input type="text" disabled class="text-muted w-80" placeholder="185" id="inputTaille">
+												<i class="edit-icon fa-solid fa-pen" data-field="Taille" id="editTaille" onclick="editField(this)"></i>
+												<i class="fa-solid fa-check d-none check" id="checkTaille"></i>
+												<i class="fa-solid fa-xmark d-none leave" data-field="Taille" id="xmarkTaille" onclick="cancelEdit(this)"></i>
+											</div>
+										</div>
+										<h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Activité physique</h6>
+										<div>
+											<i id="iconBed" onclick="categorieActivite(1)" class="fa-solid fa-bed activities"></i>
+											<i id="iconStanding" onclick="categorieActivite(2)" class="fa-solid fa-person activities"></i>
+											<i id="iconWalking" onclick="categorieActivite(3)" class="fa-solid fa-person-walking activities"></i>
+											<i id="iconRunning" onclick="categorieActivite(4)" class="fa-solid fa-person-running activities"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</main>
 {% endblock %}
