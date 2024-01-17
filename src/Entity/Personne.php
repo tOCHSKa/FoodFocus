@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PersonneRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne
@@ -28,6 +29,9 @@ class Personne
 
     #[ORM\Column(length: 50)]
     private ?string $sexe = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
@@ -90,6 +94,18 @@ class Personne
     public function setSexe(string $sexe): static
     {
         $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
 
         return $this;
     }

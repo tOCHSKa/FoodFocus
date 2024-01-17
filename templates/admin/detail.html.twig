@@ -46,7 +46,7 @@
                       
                       {# <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> #}
                       <button class="btn btn-primary">Contacter</button>
-                      <button class="btn btn-outline-danger">Supprimer</button>
+                      <a class="btn btn-outline-danger" href="{{ path('admin.list.delete', {'id': personne.id}) }}" role="button">Supprimer</a>
                     </div>
                   </div>
                 </div>
