@@ -22,6 +22,8 @@ class PersonneFixture extends Fixture
             $personne->setName($faker->name);
             $personne->setAge($faker->numberBetween(18, 65));
             $personne->setEmail($faker->email);
+            $personne->setPassword($faker->password);
+            $personne->setSexe($faker->numberBetween($min = 1, $max = 2));
 
             $manager->persist($personne);
         }

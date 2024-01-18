@@ -47,3 +47,30 @@ searchAlimentQuantity.addEventListener('keyup', () => {
     ajoutAlimnet.disabled = !regex.test(trimmedValue);
 
 });
+
+const searchProduct = document.getElementById('search');
+const searchProductClick = document.getElementById('searchClick');
+const url = "http://127.0.0.1:8000/dashboard/request";
+
+searchProductClick.addEventListener('click', () => {
+    let dataJSON = {
+        "search_terms": searchProduct.value
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataJSON),
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Gérez la réponse reçue du serveur ici
+            console.log(data);
+        })
+        .catch(error => {
+            // Gérez les erreurs ici
+            console.error('Erreur lors de la requête:', error);
+        });
+});
