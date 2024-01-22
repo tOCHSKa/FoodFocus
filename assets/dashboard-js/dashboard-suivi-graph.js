@@ -29,7 +29,6 @@ const generateRandomDataProteins = (numPoints) => Array.from({ length: numPoints
 const generateRandomDataCarbs = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
 const generateRandomDataFats = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
 
-
 const data = {
     week: {
         labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
@@ -54,16 +53,57 @@ const data = {
     }
 };
 
+
+const generateRandomDataForLineCalories = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
+const generateRandomDataForLineProtein = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
+const generateRandomDataForLineCarb = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
+const generateRandomDataForLineFat = (numPoints) => Array.from({ length: numPoints }, () => Math.floor(Math.random() * 1000));
+
+const lineData = {
+    week: {
+        labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+        calories: generateRandomDataForLineCalories(7),
+        proteins: generateRandomDataForLineProtein(7),
+        carbs: generateRandomDataForLineCarb(7),
+        fats: generateRandomDataForLineFat(7)
+    },
+    month: {
+        labels: ["Semaine 1", "Semaine 2", "Semaine 3", "Semaine 4"],
+        calories: generateRandomDataForLineCalories(4),
+        proteins: generateRandomDataForLineProtein(4),
+        carbs: generateRandomDataForLineCarb(4),
+        fats: generateRandomDataForLineFat(4)
+    },
+    year: {
+        labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+        calories: generateRandomDataForLineCalories(12),
+        proteins: generateRandomDataForLineProtein(12),
+        carbs: generateRandomDataForLineCarb(12),
+        fats: generateRandomDataForLineFat(12)
+    }
+};
+
 const config = {
-    type: 'bar',
+    type: 'bar', // Le type principal est 'bar' pour permettre l'empilement
     data: {
         labels: data[currentPeriod].labels,
         datasets: [{
-            label: currentDataType,
+            label: 'Bar Dataset',
             data: data[currentPeriod][currentDataType],
-            backgroundColor: color, // Couleur de fond du dataset
-            borderColor: color, // Couleur de la bordure du dataset
-            borderWidth: 1
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+            type: 'bar'
+        }, {
+            label: 'Line Dataset', 
+            data: lineData[currentPeriod][currentDataType],
+            borderColor: color,
+            borderWidth: 2,
+            type: 'line',
+            fill: false, 
+            pointBackgroundColor: color, 
+            pointBorderColor: color,
+            pointRadius: 3
         }]
     },
     options: {
@@ -77,6 +117,7 @@ const config = {
                 }
             },
             y: {
+                stacked: true, // Activation de l'empilement pour l'axe Y
                 grid: {
                     color: colorLine, // Couleur des lignes de grille verticales
                 },
@@ -95,6 +136,7 @@ const config = {
 
 
 
+
 let myChart = new Chart(document.getElementById('myChart'), config);
 
 
@@ -103,13 +145,29 @@ const updateChart = (period, dataType) => {
     currentPeriod = period;
     currentDataType = dataType;
     const colors = colorChange(dataType);
+
+    // Mise à jour des données pour les barres
     myChart.data.labels = data[period].labels;
     myChart.data.datasets[0].data = data[period][dataType];
     myChart.data.datasets[0].label = dataType.charAt(0).toUpperCase() + dataType.slice(1);
     myChart.data.datasets[0].backgroundColor = colors.color;
     myChart.data.datasets[0].borderColor = colors.color;
-    myChart.options.scales.x.grid.color = colors.colorLine;
-    myChart.options.scales.y.grid.color = colors.colorLine;
+
+    // Mise à jour des données pour la ligne
+    myChart.data.datasets[1].data = lineData[period][dataType];
+    myChart.data.datasets[1].label = dataType.charAt(0).toUpperCase() + dataType.slice(1);
+
+    // Mise à jour des couleurs et autres options
+    myChart.data.datasets[1].borderColor = colors.color;
+    myChart.data.datasets[1].pointBackgroundColor = colors.color;
+    myChart.data.datasets[1].pointBorderColor = colors.color;
+
+    //couleur des lignes de grille
+    myChart.options.scales.x.grid.color = colors.color;
+    myChart.options.scales.x.ticks.color = colors.color;
+    myChart.options.scales.y.grid.color = colors.color;
+    myChart.options.scales.y.ticks.color = colors.color;
+
     myChart.update();
 };
 

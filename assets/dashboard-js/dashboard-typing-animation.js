@@ -19,9 +19,23 @@ script3.onload = function () {
 // Ajoutez le script externe au DOM.
 document.body.appendChild(script3);
 
-// Ajouter un gestionnaire d'événements 'click' à l'élément input
-document.querySelector('.auto-type').addEventListener('click', function() {
-    if (typed) {
-        typed.stop(); // Arrêter l'animation Typed.js
-    }
+const inputElement = document.querySelector('.auto-type');
+let wasFocused = false;
+
+inputElement.addEventListener('focus', function() {
+    wasFocused = false;
 });
+
+inputElement.addEventListener('blur', function() {
+    wasFocused = true;
+});
+
+inputElement.addEventListener('click', function() {
+    if (!wasFocused) {
+        this.value = '';
+        typed.reset();
+        typed.stop();
+    }
+    wasFocused = true;
+});
+
