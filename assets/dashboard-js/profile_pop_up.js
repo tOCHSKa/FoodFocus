@@ -97,6 +97,7 @@ const cancelInfoButtons = document.querySelectorAll(".cancel-button");
 const saveButtons = document.querySelectorAll(".save-button");
 
 const iconsActivity = document.querySelectorAll(".activities-icon");
+const activityInputs = document.querySelectorAll(".activity-input");
 const genderButtons = document.querySelectorAll(".gallery-button");
 
 const genderSwitch = document.querySelector(".toggle-button-cover");
@@ -115,6 +116,9 @@ function editField(element) {
     if (element === editActivity) {
       iconsActivity.forEach((icon) => {
         icon.classList.remove("activity-disabled");
+      });
+      activityInputs.forEach((input) => {
+        input.disabled = false;
       });
     } else if (element === editInfoConnection) {
       newMdpContainer.classList.remove("hide-new-mdp");
@@ -153,6 +157,9 @@ function cancelEdit(element) {
       iconsActivity.forEach((icon) => {
         icon.classList.add("activity-disabled");
       });
+      activityInputs.forEach((input) => {
+        input.disabled = true;
+      });
     } else if (element === cancelInfoConnection) {
       newMdpContainer.classList.add("hide-new-mdp");
       let inputs = infoContainer.querySelectorAll("input");
@@ -189,6 +196,9 @@ function saveEdit(element) {
     if (element === saveActivity) {
       iconsActivity.forEach((icon) => {
         icon.classList.add("activity-disabled");
+      });
+      activityInputs.forEach((input) => {
+        input.disabled = true;
       });
     } else if (element === saveInfoConnection) {
       newMdpContainer.classList.add("hide-new-mdp");
