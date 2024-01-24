@@ -138,7 +138,7 @@ main.search-config {
 
 
 /* 1-1-1 PROFILE */
-.header-block  .profile-container {
+.header-block  .dashboard-profile-container {
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -1228,7 +1228,7 @@ footer {
         max-height: 400px;
     }
 
-    .header-block .profile-container {
+    .header-block .dashboard-profile-container {
         min-width: 100%;
     }
 

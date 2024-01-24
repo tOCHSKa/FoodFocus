@@ -54,12 +54,12 @@ let id = 1;
 
 
 function addprodutToList() {
-    profileContainer.style.opacity = '1';
-    dateContainer.style.opacity = '1';
-    gaugeContainer.style.opacity = '1';
-    macrosPersonalInfoSection.style.opacity = '1';
-    rightSection.style.opacity = '1';
-    suiviContainer.style.opacity = '1';
+    profileContainer.classList.remove('low-opacity');
+    dateContainer.classList.remove('low-opacity');
+    gaugeContainer.classList.remove('low-opacity');
+    macrosPersonalInfoSection.classList.remove('low-opacity');
+    rightSection.classList.remove('low-opacity');
+    suiviContainer.classList.remove('low-opacity');
 
     body.classList.remove('search-active');
 
@@ -71,12 +71,12 @@ function controleSaisieSearch(searchInput) {
     const trimmedValue = searchInput.trim();
     const regex = /^[a-zA-Z\s]+$/;
 
-    profileContainer.style.opacity = '0.5';
-    dateContainer.style.opacity = '0.5';
-    gaugeContainer.style.opacity = '0.5';
-    macrosPersonalInfoSection.style.opacity = '0.5';
-    rightSection.style.opacity = '0.5';
-    suiviContainer.style.opacity = '0.5';
+    profileContainer.classList.add('low-opacity');
+    dateContainer.classList.add('low-opacity');
+    gaugeContainer.classList.add('low-opacity');
+    macrosPersonalInfoSection.classList.add('low-opacity');
+    rightSection.classList.add('low-opacity');
+    suiviContainer.classList.add('low-opacity');
 
     body.classList.add('search-active');
 

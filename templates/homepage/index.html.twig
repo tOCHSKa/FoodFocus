@@ -28,11 +28,8 @@
 		</div>
 
 		<div class="log-in-container" id="log-in-container">
-    		<a href="#">
-        		<i class="fa-solid fa-user"></i>
-    		</a>
+			<i class="fa-solid fa-user"></i>
 		</div>
-
 
 		<div class="title-container">
 			<div class="animated-title-container">
@@ -148,7 +145,7 @@
             <img class="citron" src="{{ asset('img/citron.png')}}" alt="citron">
 
             <div class="sign-pop-up-container">
-                <div class="form sign-in-form">
+                {# <div class="form sign-in-form">
                     <div class="wrapper">
                         <div class="text-container" action="#">
                             <h2>Connexion</h2>
@@ -161,7 +158,52 @@
                             <button type="submit">Re-bonjour !</button>
                         </div>
                     </div>
+                </div> #}
+				{# <div class="form sign-in-form">
+					<div class="wrapper">
+                        <div class="text-container">
+							<h2>Connexion</h2>
+							<p>Utilisez votre Email et votre mot de passe pour vous connecter</p>
+							
+							<form action="{{ path('app_login') }}" method="post">
+								<input type="email" name="email" placeholder="Email" required />
+								<input type="password" name="password" placeholder="Password" required />
+								{% for message in app.flashes('error') %}
+									<div class="alert alert-danger">
+										{{ message }}
+									</div>
+								{% endfor %}
+								<button type="submit">Re-bonjour !</button>
+							</form>
+
+						</div>
+					</div>
+				</div> #}
+				
+				<div class="sign-pop-up-container">
+                <div class="form sign-in-form">
+                    <div class="wrapper">
+                        <div class="text-container">
+                            <h2>Connexion</h2>
+                            <p>Utilisez votre Email et votre mot de passe pour vous connecter</p>
+
+                            <form method="post">
+                                <input type="email" value="{{ last_username }}" name="email" placeholder="Email" id="inputEmail" class="form-control" autocomplete="email" required autofocus />
+                                <input type="password" name="password" placeholder="Password" id="inputPassword" class="form-control" autocomplete="current-password" required />
+                                {% for message in app.flashes('error') %}
+                                    <div class="alert alert-danger">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                                    <input type="hidden" name="_csrf_token"
+                                    value="{{ csrf_token('authenticate') }}">
+                                <button type="submit">Re-bonjour !</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+
+
                 <div class="form sign-up-form active">
                     <div class="wrapper">
                         <div class="text-container" action="#">
