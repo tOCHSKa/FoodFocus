@@ -324,6 +324,13 @@ footer .copyright {
 
 
 
+/* LOW-OPACITY CLASS */
+.low-opacity {
+    opacity: 0.5;
+}
+
+
+
 
 
 /* DESKTOP */

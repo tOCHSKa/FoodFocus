@@ -29,7 +29,7 @@ home.addEventListener('click', () => {
 });
 
 const main = document.querySelector('main');
-const profileContainer = document.querySelector('.profile-container');
+const profileContainer = document.querySelector('.dashboard-profile-container');
 const dateContainer = document.querySelector('.date-container');
 const gaugeContainer = document.querySelector('.gauge-container');
 const macrosPersonalInfoSection = document.querySelector('.macros-personal-infos-container');
